@@ -1,0 +1,79 @@
+@startuml Classes Diagram
+
+
+package app <<Rectangle>> {
+ class Application {
+  -handlers: list[CommandHandler]
+  -root_handler: function
+  -state: State
+  -sessionmaker: sessionmaker
+  +start()
+  +add_handler(handler: CommandHandler)
+  +add_root_handler(handler: function)
+  -set_state(state: State)
+  -set_sassion_maker(sessionmaker: sessionmaker)
+  -get_user_entered_agruments()
+  -get_handlers_expected_flags()
+ }
+
+ class ApplicationBuilder {
+  {static} +build(): Application
+ }
+
+ class CommandHandler {
+  -expected_flags: tuple[str,str]
+  -handler: function
+
+  +handle()
+  +is_expecting()
+  +get_expected_flags()
+ }
+
+ class State {
+  +card_number: str
+  +pincode: str
+  +monies: int
+  --
+  +args: list[]
+ }
+
+ ApplicationBuilder --> Application
+ Application "1" o-- "many" CommandHandler
+ Application "1" o-- "1" State
+}
+
+package "Data Access Layer" <<Rectangle>>{
+ class Crud
+
+ database Postgres {
+  frame Models {
+   class Card {
+    +id: int
+    +number: str
+    +pincode: str
+    +account_id: int
+   }
+
+   class CardAccount {
+    +id: int
+    +number: str
+    +currency: int
+    +balance: int
+   }
+
+   class Transfer {
+    +id: int
+    +account_id: int
+    +operation_type: enum
+    +operation_name: str
+    +completed_at: timestamp
+    +amount: int
+   }
+  }
+ }
+ Crud --> Postgres
+}
+
+Crud "1" --o "1" Application : sessionmaker
+
+@enduml

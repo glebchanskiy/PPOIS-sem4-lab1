@@ -1,0 +1,22 @@
+version: '3.6'
+
+services:
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - 5454:8080
+    
+  db:
+    image: 'postgres:13'
+    container_name: db
+    environment:
+      - DATABASE_HOST=127.0.0.1
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=6037845
+      - POSTGRES_DB=bank_db
+    ports:
+      - "5432:5432"
+    volumes:
+      - ./init.sql:/docker-entrypoint-initdb.d/docker_postgres_init.sql
+      - ./postgres-data:/var/lib/postgresql/data

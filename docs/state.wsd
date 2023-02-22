@@ -1,0 +1,24 @@
+@startuml State
+
+[*] --> Off
+
+Off --> serving : startup
+
+
+state "Serving Customer" as serving {
+ serving : entry / insert_card
+ serving : exit / get_card
+
+ state "Authentication" as auth
+ state "Selectiong Transaction" as selecting
+ state "Transaction" as trans
+ [*] --> auth
+ auth --> selecting
+ selecting --> trans
+ trans --> [*]
+}
+
+serving --> Off : cancel
+
+
+@enduml
