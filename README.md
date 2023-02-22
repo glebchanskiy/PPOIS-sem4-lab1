@@ -5,7 +5,7 @@
 Clone repository:
 
 ```sh
-git clone https://github.com/glebchanskiy/....
+git clone https://github.com/glebchanskiy/PPOIS-sem4-lab1
 ```
 
 Install python deps:
