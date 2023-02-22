@@ -31,16 +31,6 @@ cd lab1
 poetry run atm-client
 ```
 
-Or run with script:
-
-```sh
-# terminal 1
-./prepare.sh
-
-# termianl 2
-poetry run atm-client 
-```
-
 ---
 
 ## Dependencies
